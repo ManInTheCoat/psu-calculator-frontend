@@ -1,5 +1,5 @@
 import "./PowerFilter.css";
-import type { FC, FormEvent } from "react";
+import type { FC, SubmitEvent } from "react";
 import { Button, Form } from "react-bootstrap";
 
 interface PowerFilterProps {
@@ -22,7 +22,7 @@ export const PowerFilter: FC<PowerFilterProps> = ({
   onChange,
   onSearch,
 }) => {
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     onSearch();
   };

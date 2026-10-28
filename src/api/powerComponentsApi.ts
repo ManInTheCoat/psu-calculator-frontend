@@ -1,8 +1,8 @@
 import { POWER_COMPONENTS_MOCK } from "./mock";
 import type { PowerComponentFeedItem, PowerComponentListItem } from "./types";
 
-// В ЛР5 бэкенд не вызывается: функции повторяют методы веб-сервиса
-// (те же параметры и формат ответа), но берут данные из mock-коллекции.
+// В ЛР5 бэкенд не вызывается: функции повторяют методы веб-сервиса,
+// но берут данные из mock-коллекции.
 
 export const POWER_MIN = 0;
 export const POWER_MAX = 500;
@@ -33,7 +33,7 @@ export const getPowerComponents = (
 // Аналог GET /api/power_components/feed?power_component_id=...&next=true
 // Без id - первый компонент; с id - этот компонент;
 // с id и next - следующий после него, после последнего снова первый.
-// Если компонент не найден, возвращается null (на бэкенде это 404).
+// Если компонент не найден, возвращается null.
 export const getPowerComponentFeed = (
   powerComponentId?: number,
   next = false,
