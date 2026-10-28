@@ -5,7 +5,7 @@ import type { PowerComponentFeedItem } from "./types";
 // У компонентов 4 и 6 пустые image_url и video_url - для них показываются
 // фото и видео по умолчанию из папки public.
 
-const MINIO_BUCKET_URL = "http://localhost:9000/power-components";
+const MINIO_BUCKET_URL = "http://127.0.0.1:9000/power-components";
 
 const builder = { id: 1, login: "builder" };
 const pcMaster = { id: 2, login: "pc_master" };
