@@ -1,0 +1,84 @@
+:root {
+  --accent: #fd8c0b;        /* оранжевый акцент: кнопки и активные элементы */
+  --accent-hover: #e07b06;  /* оранжевый при наведении */
+  --text: #333333;          /* заголовки и основной текст */
+  --text-muted: #afafaf;    /* второстепенный текст, подписи */
+  --bg: #f2f2f2;            /* светло-серый фон страниц */
+  --border: #e9e9e9;        /* границы и разделители */
+  --white: #ffffff;         /* фон карточек и нижней панели */
+  --radius-button: 6px;
+  --tab-bar-height: 64px;
+
+  --bs-body-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --bs-body-color: var(--text);
+  --bs-body-bg: var(--bg);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ---------- Обёртка под ширину телефона ---------- */
+
+.appShell {
+  max-width: 420px;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.06);
+}
+
+.appHeader {
+  background: var(--white);
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.appHeader__logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.appContent {
+  flex: 1;
+  padding: 16px 16px calc(var(--tab-bar-height) + 16px);
+}
+
+/* ---------- Кнопка в цветах приложения (variant="accent") ---------- */
+
+.btn-accent {
+  --bs-btn-color: var(--white);
+  --bs-btn-bg: var(--accent);
+  --bs-btn-border-color: var(--accent);
+  --bs-btn-hover-color: var(--white);
+  --bs-btn-hover-bg: var(--accent-hover);
+  --bs-btn-hover-border-color: var(--accent-hover);
+  --bs-btn-active-color: var(--white);
+  --bs-btn-active-bg: var(--accent-hover);
+  --bs-btn-active-border-color: var(--accent-hover);
+  --bs-btn-disabled-color: var(--white);
+  --bs-btn-disabled-bg: var(--accent);
+  --bs-btn-disabled-border-color: var(--accent);
+  --bs-btn-focus-shadow-rgb: 253, 140, 11;
+  --bs-btn-border-radius: var(--radius-button);
+  --bs-btn-font-weight: 700;
+  --bs-btn-font-size: 14px;
+}
+
+.pageMessage {
+  padding: 24px 4px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.pageSpinner {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
+  color: var(--accent);
+}
