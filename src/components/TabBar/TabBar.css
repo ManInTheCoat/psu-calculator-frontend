@@ -1,22 +1,28 @@
-.tabBar {
-  position: fixed;
-  bottom: 0;
+.tabBar.navbar {
   left: 50%;
+  right: auto;
   transform: translateX(-50%);
   width: 100%;
   max-width: 420px;
   height: var(--tab-bar-height);
-  flex-wrap: nowrap;
+  padding: 0;
   background: var(--white);
   border-top: 1px solid var(--border);
-  z-index: 10;
 }
 
-.tabBar__cell {
+.tabBar__nav.navbar-nav {
+  width: 100%;
+  height: 100%;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.tabBar__cell.nav-item {
   flex: 1;
+  height: 100%;
 }
 
-.tabBar__item.nav-link {
+.tabBar .tabBar__item.nav-link {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -27,16 +33,16 @@
   color: var(--text);
 }
 
-.tabBar__item.nav-link:hover,
-.tabBar__item.nav-link:focus {
+.tabBar .tabBar__item.nav-link:hover,
+.tabBar .tabBar__item.nav-link:focus {
   color: var(--accent-hover);
 }
 
-.tabBar__item.nav-link.active {
+.tabBar .tabBar__item.nav-link.active {
   color: var(--accent);
 }
 
-.tabBar__item.nav-link.disabled {
+.tabBar .tabBar__item.nav-link.disabled {
   color: var(--text-muted);
   opacity: 0.6;
 }

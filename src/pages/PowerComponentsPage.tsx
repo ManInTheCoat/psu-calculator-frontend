@@ -57,11 +57,6 @@ const PowerComponentsPage: FC = () => {
     setSearchParams({ max_power: String(maxPower) });
   };
 
-  const handleReset = () => {
-    setMaxPower(POWER_MAX);
-    setSearchParams({});
-  };
-
   return (
     <>
       <PowerFilter
@@ -72,7 +67,6 @@ const PowerComponentsPage: FC = () => {
         disabled={loading}
         onChange={setMaxPower}
         onSearch={handleSearch}
-        onReset={handleReset}
       />
 
       {loading && (

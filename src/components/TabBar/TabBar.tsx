@@ -1,6 +1,6 @@
 import "./TabBar.css";
 import type { FC, ReactNode } from "react";
-import { Nav } from "react-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import { ROUTES, ROUTE_LABELS, type RouteKeyType } from "../../Routes";
 
@@ -32,7 +32,8 @@ export const TabBar: FC = () => {
   );
 
   return (
-    <Nav as="nav" className="tabBar">
+    <Navbar fixed="bottom" className="tabBar">
+      <Nav className="tabBar__nav">
       {TAB_BAR_ITEMS.map((item) => (
         <Nav.Item key={item.key} className="tabBar__cell">
           {item.disabled ? (
@@ -51,6 +52,7 @@ export const TabBar: FC = () => {
           )}
         </Nav.Item>
       ))}
-    </Nav>
+      </Nav>
+    </Navbar>
   );
 };

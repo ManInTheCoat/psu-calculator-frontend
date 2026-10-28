@@ -3,7 +3,6 @@ import { AppLayout } from "./AppLayout";
 import { ROUTES } from "./Routes";
 import PowerComponentsPage from "./pages/PowerComponentsPage";
 import PowerComponentFeedPage from "./pages/PowerComponentFeedPage";
-import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   return (
@@ -14,7 +13,7 @@ function App() {
           <Route path={ROUTES.TILE} element={<PowerComponentsPage />} />
           <Route path={ROUTES.FEED} element={<PowerComponentFeedPage />} />
           <Route path={`${ROUTES.FEED}/:id`} element={<PowerComponentFeedPage />} />
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path="*" element={<Navigate to={ROUTES.TILE} replace />} />
         </Route>
       </Routes>
     </BrowserRouter>

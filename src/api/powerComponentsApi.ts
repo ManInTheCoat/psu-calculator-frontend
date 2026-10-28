@@ -3,16 +3,10 @@ import type { PowerComponentFeedItem, PowerComponentListItem } from "./types";
 
 // В ЛР5 бэкенд не вызывается: функции повторяют методы веб-сервиса
 // (те же параметры и формат ответа), но берут данные из mock-коллекции.
-// Задержка имитирует сетевой запрос, чтобы был виден индикатор загрузки.
 
 export const POWER_MIN = 0;
 export const POWER_MAX = 500;
 export const POWER_STEP = 10;
-
-const MOCK_DELAY_MS = 300;
-
-const withDelay = <T>(data: T): Promise<T> =>
-  new Promise((resolve) => setTimeout(() => resolve(data), MOCK_DELAY_MS));
 
 const toListItem = (item: PowerComponentFeedItem): PowerComponentListItem => ({
   id: item.id,
@@ -33,7 +27,7 @@ export const getPowerComponents = (
     (item) => maxPower === undefined || item.power_watt <= maxPower,
   ).map(toListItem);
 
-  return withDelay(list);
+  return Promise.resolve(list);
 };
 
 // Аналог GET /api/power_components/feed?power_component_id=...&next=true
@@ -47,18 +41,18 @@ export const getPowerComponentFeed = (
   const published = [...POWER_COMPONENTS_MOCK].sort((a, b) => a.id - b.id);
 
   if (published.length === 0) {
-    return withDelay(null);
+    return Promise.resolve(null);
   }
 
   if (powerComponentId === undefined) {
-    return withDelay(published[0]);
+    return Promise.resolve(published[0]);
   }
 
   if (next) {
     const nextItem = published.find((item) => item.id > powerComponentId);
-    return withDelay(nextItem ?? published[0]);
+    return Promise.resolve(nextItem ?? published[0]);
   }
 
   const item = published.find((item) => item.id === powerComponentId);
-  return withDelay(item ?? null);
+  return Promise.resolve(item ?? null);
 };

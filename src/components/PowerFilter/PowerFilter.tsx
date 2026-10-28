@@ -10,10 +10,9 @@ interface PowerFilterProps {
   disabled?: boolean;
   onChange: (value: number) => void;
   onSearch: () => void;
-  onReset: () => void;
 }
 
-// Фильтр плитки по мощности: ползунок «Мощность до N Вт» и кнопки
+// Фильтр плитки по мощности: ползунок «Мощность до N Вт» и кнопка «Найти»
 export const PowerFilter: FC<PowerFilterProps> = ({
   value,
   min,
@@ -22,7 +21,6 @@ export const PowerFilter: FC<PowerFilterProps> = ({
   disabled = false,
   onChange,
   onSearch,
-  onReset,
 }) => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -50,14 +48,6 @@ export const PowerFilter: FC<PowerFilterProps> = ({
       </div>
       <div className="powerFilter__scale">
         <span>{min} Вт</span>
-        <Button
-          variant="link"
-          className="powerFilter__reset"
-          disabled={disabled}
-          onClick={onReset}
-        >
-          Сбросить
-        </Button>
         <span>{max} Вт</span>
       </div>
     </Form>
