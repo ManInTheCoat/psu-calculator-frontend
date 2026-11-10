@@ -1,11 +1,13 @@
 import type { PowerComponentFeedItem } from "./types";
 
 // Mock-коллекция опубликованных компонентов ПК.
+// Используется, когда бэкенд недоступен (только в интерфейсе гостя).
 // Поля такие же, как в ответе ленты веб-сервиса, список строится из них же.
 // У компонентов 4 и 6 пустые image_url и video_url - для них показываются
 // фото и видео по умолчанию из папки public.
 
-const MINIO_BUCKET_URL = "http://127.0.0.1:9000/power-components";
+// Файлы из MinIO берутся через второй маршрут прокси Vite (/power-components)
+const MINIO_BUCKET_URL = "/power-components";
 
 const builder = { id: 1, login: "builder" };
 const pcMaster = { id: 2, login: "pc_master" };
