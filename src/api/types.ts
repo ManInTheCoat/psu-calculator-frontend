@@ -1,35 +1,9 @@
-// Типы повторяют ответы веб-сервиса
+// Типы ответов веб-сервиса берутся из сгенерированного клиента (src/api/Api.ts),
+// здесь только короткие имена для страниц и компонентов.
 
-export type Flag = 0 | 1;
-
-// Элемент списка: GET /api/power_components?max_power=...
-export interface PowerComponentListItem {
-  id: number;
-  title: string;
-  image_url: string;
-  power_watt: number;
-  weight_gram: number;
-  likes_count: number;
-  is_mine: Flag;
-}
-
-export interface PowerComponentCreator {
-  id: number;
-  login: string;
-}
-
-// Карточка ленты: GET /api/power_components/feed?power_component_id=...&next=true
-export interface PowerComponentFeedItem {
-  id: number;
-  title: string;
-  description: string;
-  image_url: string;
-  video_url: string;
-  power_watt: number;
-  weight_gram: number;
-  formed_at: string;
-  creator: PowerComponentCreator;
-  likes_count: number;
-  is_liked: Flag;
-  is_mine: Flag;
-}
+export type {
+  PowerComponentListItemSerializer as PowerComponentListItem,
+  PowerComponentFeedSerializer as PowerComponentFeedItem,
+  PowerComponentSerializer as PowerComponentDraft,
+  UserSerializer as User,
+} from "./Api";
