@@ -103,10 +103,15 @@ const feedSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getFeedItem.pending, (state) => {
+      .addCase(getFeedItem.pending, (state, action) => {
+        const { powerComponentId, next } = action.meta.arg;
         state.loading = true;
         state.notFound = false;
         state.error = null;
+        // Открыт другой компонент (не «След.») - прежний не показываем, пока грузится новый
+        if (!next && state.item && powerComponentId !== undefined && state.item.id !== powerComponentId) {
+          state.item = null;
+        }
       })
       .addCase(getFeedItem.fulfilled, (state, action) => {
         state.loading = false;
