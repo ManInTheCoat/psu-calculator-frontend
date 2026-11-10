@@ -23,12 +23,12 @@ export interface BodyCreatePowerComponentApiPowerComponentsPost {
    * Image
    * Фото: PNG, JPEG, GIF, WEBP до 5 МБ
    */
-  image?: File | null;
+  image?: File | Blob | null;
   /**
    * Video
    * Короткое видео: MP4, MOV, WEBM до 50 МБ
    */
-  video?: File | null;
+  video?: File | Blob | null;
 }
 
 /** ErrorDetail */
@@ -242,6 +242,10 @@ export interface ValidationError {
   msg: string;
   /** Error Type */
   type: string;
+  /** Input */
+  input?: any;
+  /** Context */
+  ctx?: object;
 }
 
 import type {
@@ -469,18 +473,17 @@ export class Api<
       data: BodyCreatePowerComponentApiPowerComponentsPost,
       params: RequestParams = {},
     ) =>
-      this.request<
-        PowerComponentSerializer,
-        ErrorDetail | HTTPValidationError
-      >({
-        path: `/api/power_components`,
-        method: "POST",
-        body: data,
-        secure: true,
-        type: ContentType.FormData,
-        format: "json",
-        ...params,
-      }),
+      this.request<PowerComponentSerializer, ErrorDetail | HTTPValidationError>(
+        {
+          path: `/api/power_components`,
+          method: "POST",
+          body: data,
+          secure: true,
+          type: ContentType.FormData,
+          format: "json",
+          ...params,
+        },
+      ),
 
     /**
      * No description
@@ -549,18 +552,17 @@ export class Api<
       data: PowerComponentPublishRequest,
       params: RequestParams = {},
     ) =>
-      this.request<
-        PowerComponentSerializer,
-        ErrorDetail | HTTPValidationError
-      >({
-        path: `/api/power_components/${powerComponentId}/publish`,
-        method: "PUT",
-        body: data,
-        secure: true,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
+      this.request<PowerComponentSerializer, ErrorDetail | HTTPValidationError>(
+        {
+          path: `/api/power_components/${powerComponentId}/publish`,
+          method: "PUT",
+          body: data,
+          secure: true,
+          type: ContentType.Json,
+          format: "json",
+          ...params,
+        },
+      ),
 
     /**
      * No description
