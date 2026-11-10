@@ -1,61 +1,47 @@
 import type { FC } from "react";
-import { useEffect, useState } from "react";
-import { Col, Row, Spinner } from "react-bootstrap";
-import { useSearchParams } from "react-router-dom";
-import {
-  getPowerComponents,
-  POWER_MAX,
-  POWER_MIN,
-  POWER_STEP,
-} from "../api/powerComponentsApi";
-import type { PowerComponentListItem } from "../api/types";
+import { useEffect } from "react";
+import { Alert, Col, Row, Spinner } from "react-bootstrap";
+import { POWER_MAX, POWER_MIN, POWER_STEP } from "../api/powerComponentsApi";
+import { LoadingOverlay } from "../components/LoadingOverlay/LoadingOverlay";
+import { MockNotice } from "../components/MockNotice/MockNotice";
 import { PowerComponentCard } from "../components/PowerComponentCard/PowerComponentCard";
 import { PowerFilter } from "../components/PowerFilter/PowerFilter";
+import { useAppDispatch, useAppSelector } from "../store";
+import {
+  applyMaxPowerFilter,
+  deletePowerComponent,
+  getPowerComponentsList,
+  setMaxPower,
+} from "../store/powerComponentsSlice";
 
-// Значение max_power из адреса страницы: целое от 0 до 500, иначе фильтра нет
-const parseMaxPower = (value: string | null): number | undefined => {
-  if (value === null || value.trim() === "") return undefined;
-  const maxPower = Number(value);
-  if (!Number.isInteger(maxPower) || maxPower < POWER_MIN || maxPower > POWER_MAX) {
-    return undefined;
-  }
-  return maxPower;
-};
-
-// Плитка: каталог опубликованных компонентов в два столбца с фильтром по мощности
+// Плитка: каталог опубликованных компонентов в два столбца с фильтром по мощности.
+// Фильтр и список хранятся в Redux (слайс powerComponents), запросы - в thunk-ах.
 const PowerComponentsPage: FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const appliedMaxPower = parseMaxPower(searchParams.get("max_power"));
+  const dispatch = useAppDispatch();
+  const { maxPower, items, loading, deletingId, fromMock, error } = useAppSelector(
+    (state) => state.powerComponents,
+  );
+  const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated);
 
-  const [maxPower, setMaxPower] = useState(appliedMaxPower ?? POWER_MAX);
-  const [powerComponents, setPowerComponents] = useState<PowerComponentListItem[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  // Загрузка списка при открытии страницы и при смене фильтра в адресе
+  // Загрузка при открытии страницы, а также после входа и выхода:
+  // меняются признаки is_mine и сбрасывается фильтр
   useEffect(() => {
-    let ignore = false;
-    setLoading(true);
+    dispatch(getPowerComponentsList());
+  }, [dispatch, isAuthenticated]);
 
-    getPowerComponents(appliedMaxPower).then((list) => {
-      if (ignore) return;
-      setPowerComponents(list);
-      setLoading(false);
-    });
-
-    // Ответ на устаревший запрос не записываем (смена фильтра или уход со страницы)
-    return () => {
-      ignore = true;
-    };
-  }, [appliedMaxPower]);
-
-  // Ползунок повторяет фильтр из адреса, в том числе при переходе «Назад»
-  useEffect(() => {
-    setMaxPower(appliedMaxPower ?? POWER_MAX);
-  }, [appliedMaxPower]);
-
+  // Кнопка «Найти»: ползунок -> фильтр в хранилище -> запрос с max_power
   const handleSearch = () => {
-    setSearchParams({ max_power: String(maxPower) });
+    dispatch(applyMaxPowerFilter());
+    dispatch(getPowerComponentsList());
   };
+
+  const handleDelete = (id: number) => {
+    if (window.confirm("Удалить компонент?")) {
+      dispatch(deletePowerComponent(id));
+    }
+  };
+
+  const busy = loading || deletingId !== null;
 
   return (
     <>
@@ -64,32 +50,41 @@ const PowerComponentsPage: FC = () => {
         min={POWER_MIN}
         max={POWER_MAX}
         step={POWER_STEP}
-        disabled={loading}
-        onChange={setMaxPower}
+        disabled={busy}
+        onChange={(value) => dispatch(setMaxPower(value))}
         onSearch={handleSearch}
       />
 
-      {loading && (
+      {fromMock && <MockNotice />}
+      {error && <Alert variant="danger">{error}</Alert>}
+
+      {loading && items.length === 0 && (
         <div className="pageSpinner">
           <Spinner animation="border" role="status" />
         </div>
       )}
 
-      {!loading && powerComponents.length === 0 && (
+      {!loading && !error && items.length === 0 && (
         <p className="pageMessage">
           По заданному ограничению мощности компоненты не найдены.
         </p>
       )}
 
-      {!loading && powerComponents.length > 0 && (
+      {items.length > 0 && (
         <Row xs={2} className="g-3">
-          {powerComponents.map((powerComponent) => (
+          {items.map((powerComponent) => (
             <Col key={powerComponent.id}>
-              <PowerComponentCard powerComponent={powerComponent} />
+              <PowerComponentCard
+                powerComponent={powerComponent}
+                onDelete={isAuthenticated && powerComponent.is_mine ? handleDelete : undefined}
+                disabled={busy}
+              />
             </Col>
           ))}
         </Row>
       )}
+
+      <LoadingOverlay show={busy && items.length > 0} />
     </>
   );
 };

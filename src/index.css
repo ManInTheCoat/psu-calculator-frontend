@@ -82,3 +82,38 @@ body {
   padding: 32px 0;
   color: var(--accent);
 }
+
+.appHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.appHeader__user {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ---------- Анимация запроса: блокирует кнопки до ответа ---------- */
+
+.loadingOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(242, 242, 242, 0.6);
+  cursor: progress;
+}
+
+.loadingOverlay__spinner {
+  color: var(--accent);
+}
+
+.mockNotice.alert {
+  font-size: 13px;
+  padding: 8px 12px;
+}

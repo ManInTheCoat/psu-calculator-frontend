@@ -96,3 +96,27 @@
 .feed__more.btn:hover {
   color: var(--accent-hover);
 }
+
+/* Лайк - кнопка */
+.feed__param--button {
+  font: inherit;
+  border: 0;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.feed__param--button:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.feed__param--button:disabled {
+  cursor: default;
+}
+
+.feed__delete.btn {
+  width: 100%;
+  padding: 8px 6px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: var(--radius-button);
+}

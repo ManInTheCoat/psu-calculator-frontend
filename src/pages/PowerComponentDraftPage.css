@@ -1,0 +1,62 @@
+.draft__heading {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+/* Блоки страницы: сверху фото и видео, ниже текст и поля по теме */
+.draft__section {
+  margin-bottom: 16px;
+  padding: 14px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.draft__sectionTitle {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.draft__media {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.draft__image,
+.draft__video {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  background: var(--bg);
+  border-radius: 8px;
+}
+
+.draft__image {
+  object-fit: contain;
+}
+
+.draft__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.draft__label {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.draft__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.draft__submit.btn {
+  width: 100%;
+  min-height: 40px;
+}

@@ -1,0 +1,22 @@
+.login {
+  padding: 24px 16px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.login__title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.login__label {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.login__submit.btn {
+  width: 100%;
+  min-height: 40px;
+}

@@ -13,3 +13,6 @@ export const ROUTE_LABELS: { [key in RouteKeyType]: string } = {
   TILE: "Плитка",
   LOGIN: "Вход",
 };
+
+// Подпись последнего пункта меню после авторизации
+export const LOGOUT_LABEL = "Выход";
