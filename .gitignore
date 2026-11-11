@@ -21,3 +21,11 @@ dist-ssr
 
 # Временные файлы Word
 ~$*
+
+# Фото и скриншоты в docs не коммитятся
+docs/**/*.jpg
+docs/**/*.jpeg
+docs/**/*.png
+
+# Спеки и планы
+docs/superpowers/
